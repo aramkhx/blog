@@ -116,13 +116,15 @@ def fmt_date(date_str):
         return date_str
 
 
-def header(title, is_post=False, description=""):
+def header(title, is_post=False, description="", active_page=""):
     prefix     = '../../../' if is_post else ''
     back       = f'<a class="back-link" href="{prefix}index.html">\u2190 Home</a>' if is_post else ""
     page_title = title if title == SITE_NAME else f"{title} \u2014 {SITE_NAME}"
     desc_tag   = f'\n  <meta name="description" content="{description}"/>' if description else ""
     tagline    = f'<p class="tagline">{TAGLINE}</p>\n  ' if TAGLINE else ""
     progress   = '<div class="reading-progress" id="reading-progress"></div>\n' if is_post else ''
+    writing_cls = ' class="active"' if active_page == "writing" else ''
+    about_cls   = ' class="active"' if active_page == "about" else ''
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -131,6 +133,7 @@ def header(title, is_post=False, description=""):
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>{page_title}</title>{desc_tag}
   <link rel="stylesheet" href="{prefix}style.css"/>
+  <link rel="icon" type="image/png" href="{prefix}images/website-icon.png">
 </head>
 <body>
 {progress}<div class="container">
@@ -138,8 +141,8 @@ def header(title, is_post=False, description=""):
     <p class="site-title"><a href="{prefix}index.html">{SITE_NAME}</a></p>
     {tagline}<div class="header-row">
       <nav>
-        <a href="{prefix}index.html">Writing</a>
-        <a href="{prefix}about.html">About</a>
+        <a href="{prefix}index.html"{writing_cls}>Writing</a>
+        <a href="{prefix}about.html"{about_cls}>About</a>
       </nav>
       <button class="theme-btn" id="theme-btn" aria-label="Toggle theme">{ICON_MOON}{ICON_SUN}</button>
     </div>
@@ -228,7 +231,7 @@ def build_posts():
         out_path = os.path.join(out_dir, slug + '.html')
         rel_path = f"{category}/{date}/{slug}.html"
 
-        page  = header(meta['title'], is_post=True, description=meta.get('excerpt', ''))
+        page  = header(meta['title'], is_post=True, description=meta.get('excerpt', ''), active_page="writing")
         page += f"""  <article>
     <div class="post-header">
       <h1>{meta['title']}</h1>
@@ -256,16 +259,32 @@ def build_posts():
 
 
 def build_homepage(posts):
-    items = ""
-    for p in posts:
-        excerpt_html = f'\n      <p class="post-excerpt">{p["excerpt"]}</p>' if p.get("excerpt") else ""
-        items += f"""    <li>
+    page  = header(SITE_NAME, active_page="writing")
+
+    if posts:
+        items = ""
+        for p in posts:
+            excerpt_html = f'\n      <p class="post-excerpt">{p["excerpt"]}</p>' if p.get("excerpt") else ""
+            items += f"""    <li>
       <time class="post-date">{fmt_date(p['date'])}</time>
       <a class="post-title-link" href="{p['path']}">{p['title']}</a>{excerpt_html}
     </li>
 """
-    page  = header(SITE_NAME)
-    page += f'<ul class="post-list">\n{items}</ul>\n'
+        page += f'<ul class="post-list">\n{items}</ul>\n'
+    else:
+        page += """  <div class="empty-state">
+    <svg class="empty-icon" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+      <line x1="16" y1="13" x2="8" y2="13"/>
+      <line x1="16" y1="17" x2="8" y2="17"/>
+      <polyline points="10 9 9 9 8 9"/>
+    </svg>
+    <h2 class="empty-title">No posts yet</h2>
+    <p class="empty-text">Nothing has been published just yet.<br/>Please check back soon &mdash; new writing is on the way.</p>
+  </div>
+"""
+
     page += page_footer()
 
     os.makedirs(SITE_DIR, exist_ok=True)

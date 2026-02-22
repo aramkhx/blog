@@ -176,6 +176,14 @@ nav a:hover {
   color: var(--text);
 }
 
+nav a.active {
+  color: var(--text);
+}
+
+nav a.active::after {
+  width: 100%;
+}
+
 nav a::after {
   content: '';
   position: absolute;
@@ -312,6 +320,35 @@ html[data-theme="dark"] .theme-btn .icon-moon { display: none; }
   color: var(--muted);
   line-height: 1.5;
   margin-top: 0.2rem;
+}
+
+/* ─── Empty state (no posts) ────────────────────────────── */
+.empty-state {
+  text-align: center;
+  padding: 4rem 1.5rem;
+  animation: fadeIn 0.6s ease-out both;
+}
+
+.empty-icon {
+  color: var(--muted);
+  opacity: 0.4;
+  margin-bottom: 1.5rem;
+}
+
+.empty-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
+}
+
+.empty-text {
+  font-size: 1rem;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 380px;
+  margin: 0 auto;
 }
 
 /* ─── Single post header ────────────────────────────────── */
