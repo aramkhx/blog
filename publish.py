@@ -43,6 +43,11 @@ ICON_GITHUB = _SVG.format(
     'A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7'
     'A3.37 3.37 0 0 0 9 18.13V22"/>'
 )
+ICON_RSS = _SVG.format(
+    '<path d="M4 11a9 9 0 0 1 9 9"/>'
+    '<path d="M4 4a16 16 0 0 1 16 16"/>'
+    '<circle cx="5" cy="19" r="1"/>'
+)
 
 # Inline scripts – kept tiny to stay lightweight
 ANTI_FOUC = (
@@ -134,6 +139,7 @@ def header(title, is_post=False, description="", active_page=""):
   <title>{page_title}</title>{desc_tag}
   <link rel="stylesheet" href="{prefix}style.css"/>
   <link rel="icon" type="image/png" href="{prefix}images/website-icon.png">
+  <link rel="alternate" type="application/rss+xml" title="{SITE_NAME} RSS Feed" href="{prefix}rss.xml"/>
 </head>
 <body>
 {progress}<div class="container">
@@ -164,6 +170,7 @@ def page_footer(is_post=False):
         social += f'<a href="{LINKEDIN}" class="social-link" title="LinkedIn" rel="noopener noreferrer" target="_blank">{ICON_LINKEDIN}</a>'
     if GITHUB:
         social += f'<a href="{GITHUB}" class="social-link" title="GitHub" rel="noopener noreferrer" target="_blank">{ICON_GITHUB}</a>'
+    social += f'<a href="{SITE_URL}/rss.xml" class="social-link" title="RSS Feed" rel="noopener noreferrer" target="_blank">{ICON_RSS}</a>'
 
     social_html = f'<div class="footer-social">{social}</div>' if social else ""
     progress_script = PROGRESS_JS if is_post else ""
@@ -251,8 +258,10 @@ def build_posts():
         posts.append({
             'title': meta['title'],
             'date':  date,
+            'category': category,
             'path':  rel_path,
             'excerpt': meta.get('excerpt', ''),
+            'html_body': html_body,
         })
 
     return posts
@@ -293,6 +302,50 @@ def build_homepage(posts):
     print("  ✅ Built: site/index.html")
 
 
+def build_rss(posts):
+    from xml.sax.saxutils import escape
+    from email.utils import formatdate
+    from calendar import timegm
+    from time import strptime
+
+    def to_rfc822(date_str):
+        t = strptime(date_str, '%Y-%m-%d')
+        return formatdate(timegm(t), usegmt=True)
+
+    items = ""
+    for p in posts:
+        link = f"{SITE_URL}/{p['path']}"
+        pub_date = to_rfc822(p['date'])
+        description = escape(p['html_body'])
+        items += f"""    <item>
+      <title>{escape(p['title'])}</title>
+      <link>{link}</link>
+      <guid isPermaLink="true">{link}</guid>
+      <pubDate>{pub_date}</pubDate>
+      <category>{escape(p['category'])}</category>
+      <description>{description}</description>
+    </item>
+"""
+
+    now = formatdate(usegmt=True)
+    rss = f"""<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{escape(SITE_NAME)}</title>
+    <link>{SITE_URL}</link>
+    <description>{escape(TAGLINE)}</description>
+    <language>en</language>
+    <lastBuildDate>{now}</lastBuildDate>
+    <atom:link href="{SITE_URL}/rss.xml" rel="self" type="application/rss+xml"/>
+{items}  </channel>
+</rss>
+"""
+
+    with open(os.path.join(SITE_DIR, 'rss.xml'), 'w') as f:
+        f.write(rss)
+    print("  ✅ Built: site/rss.xml")
+
+
 def copy_assets():
     import shutil
     for asset in ['style.css', 'about.html']:
@@ -309,5 +362,6 @@ def copy_assets():
 print("Building site...")
 posts = build_posts()
 build_homepage(posts)
+build_rss(posts)
 copy_assets()
 print(f"\nDone — {len(posts)} post(s) built. Upload the site/ folder to Pinata.")
