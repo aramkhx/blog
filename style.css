@@ -3,7 +3,7 @@
   --bg:           #fafaf7;
   --text:         #2d2d2d;
   --muted:        #7a7a72;
-  --link:         #3d6b9e;
+  --link:         #D4845A;
   --border:       #e0ddd5;
   --code-bg:      #f0efe8;
   --accent:       #c96442;
@@ -18,7 +18,7 @@
     --bg:           #1a1a1d;
     --text:         #e0ddd5;
     --muted:        #9a978f;
-    --link:         #7db4d8;
+    --link:         #D4845A;
     --border:       #3a3a3d;
     --code-bg:      #242428;
     --accent:       #d4845a;
@@ -33,7 +33,7 @@ html[data-theme="light"] {
   --bg:           #fafaf7;
   --text:         #2d2d2d;
   --muted:        #7a7a72;
-  --link:         #3d6b9e;
+  --link:         #D4845A;
   --border:       #e0ddd5;
   --code-bg:      #f0efe8;
   --accent:       #c96442;
@@ -46,7 +46,7 @@ html[data-theme="dark"] {
   --bg:           #1a1a1d;
   --text:         #e0ddd5;
   --muted:        #9a978f;
-  --link:         #7db4d8;
+  --link:         #D4845A;
   --border:       #3a3a3d;
   --code-bg:      #242428;
   --accent:       #d4845a;
@@ -98,6 +98,12 @@ body {
   padding: 0 1.5rem;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Links ────────────────────────────────────────────── */
+a {
+  color: var(--link);
+  text-decoration: none;
 }
 
 /* ─── Page entrance ─────────────────────────────────────── */
@@ -393,16 +399,11 @@ html[data-theme="dark"] .theme-btn .icon-moon { display: none; }
 
 .post-content a {
   color: var(--link);
-  text-decoration: underline;
-  text-decoration-color: var(--accent);
-  text-decoration-thickness: 1.5px;
-  text-underline-offset: 3px;
-  transition: text-decoration-color 0.2s ease, color 0.2s ease;
+  transition: color 0.2s ease;
 }
 
 .post-content a:hover {
   color: var(--accent);
-  text-decoration-thickness: 2px;
 }
 
 .post-content code {
