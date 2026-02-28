@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-title-en="About — Aram Khachatryan" data-title-hy="Իմ Մասին — Արամ Խաչատրյան">
 <head>
   <meta charset="UTF-8"/>
-  <script>(function(){var t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);})()</script>
+  <script>(function(){var t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');var l=localStorage.getItem('lang')||'en';var h=document.documentElement;h.setAttribute('data-theme',t);h.setAttribute('data-lang',l);var tl=h.getAttribute('data-title-'+l);if(tl)document.title=tl;})()</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>About — Aram Khachatryan</title>
   <link rel="stylesheet" href="style.css"/>
@@ -12,22 +12,28 @@
 <body>
 <div class="container">
   <header>
-    <p class="site-title"><a href="index.html">Aram Khachatryan</a></p>
+    <p class="site-title"><a href="index.html"><span class="i18n-en">Aram Khachatryan</span><span class="i18n-hy">Արամ Խաչատրյան</span></a></p>
     <p class="tagline"></p>
     <div class="header-row">
       <nav>
-        <a href="index.html">Writing</a>
-        <a href="about.html" class="active">About</a>
+        <a href="index.html"><span class="i18n-en">Writing</span><span class="i18n-hy">Հրապարակումներ</span></a>
+        <a href="about.html" class="active"><span class="i18n-en">About</span><span class="i18n-hy">Իմ Մասին</span></a>
       </nav>
-      <button class="theme-btn" id="theme-btn" aria-label="Toggle theme"><svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+      <div class="header-buttons">
+        <button class="lang-btn" id="lang-btn" aria-label="Toggle language"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><span class="lang-label" id="lang-label">EN</span></button>
+        <button class="theme-btn" id="theme-btn" aria-label="Toggle theme"><svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+      </div>
     </div>
   </header>
   <hr class="header-rule"/>
-  <a class="back-link" href="index.html">&larr; Home</a>
+  <a class="back-link" href="index.html"><span class="i18n-en">&larr; Home</span><span class="i18n-hy">&larr; Գլխավոր</span></a>
   <article>
-    <div class="post-header"><h1>About</h1></div>
-    <div class="post-content">
-      <p>Hi, I'm <strong>Aram Khachatryan</strong>.</p>
+    <div class="post-header">
+      <h1><span class="i18n-en">Hi, I'm Aram Khachatryan.</span><span class="i18n-hy">Բարև, ես Արամ Խաչատրյանն եմ:</span></h1>
+    </div>
+
+    <!-- ═══ English content ═══ -->
+    <div class="post-content i18n-en">
 
       <p>I'm a Software and Cybersecurity Engineer with a strong focus on Web3 technologies, as well as a <strong>Web3 Armenia Evangelist</strong> and <strong>Binance Armenia</strong> community representative.</p>
 
@@ -41,23 +47,47 @@
 
       <p>That quote deeply resonates with me. Real change doesn't always come from noise&nbsp;&mdash; it comes from building. Web3 gives us the opportunity to create systems where ownership, privacy, and freedom are built into the architecture itself.</p>
 
-      <p>Beyond tech, I enjoy reading books, studying ideas, and constantly challenging my perspective on technology, society, and freedom.</p>
+      <p>Beyond tech, I enjoy reading books, studying ideas, and constantly challenging my perspective on society, and freedom.</p>
 
       <hr/>
 
       <p>Below, you'll find my social links.<br/>
       Feel free to reach out&nbsp;&mdash; I'd love to connect and hear what's on your mind.</p>
     </div>
+
+    <!-- ═══ Armenian content ═══ -->
+    <div class="post-content i18n-hy">
+      <!-- <p>Ողջույն, ես <strong>Արամ Խաչատրյանն</strong> եմ:</p> -->
+
+      <p>Ես ծրագրային ապահովման և կիբեռանվտանգության ինժեներ եմ՝ մասնավորապես Web3 ուղղվածությամբ, ինչպես նաև <strong>Web3 Armenia Evangelist</strong> և <strong>Binance Armenia</strong> համայնքային հարցերով ներկայացուցիչ։</p>
+
+      <p>Իմ մասնագիտական կիրքն ուղղված է անվտանգ համակարգերի ստեղծմանը և ապակենտրոնացված տեխնոլոգիաների զարգացմանը։ Ձգտում եմ ստեղծել այնպիսի լուծումներ, որոնք ընդլայնում են մարդկային հնարավորությունները։ Հավատացած եմ, որ Web3-ը մեր ժամանակների ամենահզոր գործիքն է՝ թվային իրավունքները պաշտպանելու և ինտերնետի ապագան վերափոխելու համար։</p>
+
+      <p>Ինչպես ասել է Հալ Ֆիննին․</p>
+
+      <blockquote>
+        <p>&laquo;Եթե ուզում ես փոխել աշխարհը, մի՛ բողոքիր, կո՛դ գրիր&raquo;</p>
+      </blockquote>
+
+      <p>Այս գաղափարն ինձ համար հիմնարար նշանակություն ունի։ Իրական փոփոխությունը գալիս է ոչ թե աղմուկից, այլ ստեղծարար աշխատանքից։ Web3-ը մեզ հնարավորություն է տալիս կառուցել համակարգեր, որտեղ սեփականությունը, գաղտնիությունն ու ազատությունը պարզապես խոստումներ չեն, այլ ներդրված են հենց տեխնոլոգիայի հիմքում։</p>
+
+      <p>Տեխնոլոգիաներից դուրս, սիրում եմ կարդալ գրքեր, ուսումնասիրել տարբեր գաղափարներ և շարունակաբար վերանայել ու զարգացնել իմ գիտելիքները հասարակության և ազատության վերաբերյալ։</p>
+
+      <hr/>
+
+      <p>Ստորև կարող եք գտնել իմ սոցիալական հարթակների հղումները։<br/>
+      Համեցե՛ք կապ հաստատել. սիրով կլսեմ ձեր տեսակետներն ու մտքերը։</p>
+    </div>
   </article>
   <footer>
     <div class="footer-social">
-      <a href="mailto:your@email.com" class="social-link" title="Email">
+      <a href="mailto:aram@khachatryan.top" class="social-link" title="Email">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
       </a>
-      <a href="https://linkedin.com/in/yourusername" class="social-link" title="LinkedIn" rel="noopener noreferrer" target="_blank">
+      <a href="https://www.linkedin.com/in/arkhachatryan" class="social-link" title="LinkedIn" rel="noopener noreferrer" target="_blank">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
       </a>
-      <a href="https://github.com/yourusername" class="social-link" title="GitHub" rel="noopener noreferrer" target="_blank">
+      <a href="https://github.com/aramkhx" class="social-link" title="GitHub" rel="noopener noreferrer" target="_blank">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
       </a>
       <a href="https://aramk.eth.limo/rss.xml" class="social-link" title="RSS Feed" rel="noopener noreferrer" target="_blank">
@@ -66,6 +96,7 @@
     </div>
   </footer>
   <script>(function(){var b=document.getElementById('theme-btn'),h=document.documentElement;b.addEventListener('click',function(){var n=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',n);localStorage.setItem('theme',n);});})();</script>
+  <script>(function(){var b=document.getElementById('lang-btn'),h=document.documentElement,label=document.getElementById('lang-label');if(label)label.textContent=h.getAttribute('data-lang')==='hy'?'HY':'EN';b.addEventListener('click',function(){var n=h.getAttribute('data-lang')==='en'?'hy':'en';h.setAttribute('data-lang',n);localStorage.setItem('lang',n);if(label)label.textContent=n==='en'?'EN':'HY';var tl=h.getAttribute('data-title-'+n);if(tl)document.title=tl;});})();</script>
 </div>
 </body>
 </html>

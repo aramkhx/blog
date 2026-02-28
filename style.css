@@ -73,6 +73,7 @@ html[data-theme="dark"] {
 body,
 a,
 .theme-btn,
+.lang-btn,
 .social-link,
 .header-rule,
 footer,
@@ -238,6 +239,54 @@ html[data-theme="light"] .theme-btn .icon-sun { display: none; }
 html[data-theme="light"] .theme-btn .icon-moon { display: block; }
 html[data-theme="dark"] .theme-btn .icon-sun { display: block; }
 html[data-theme="dark"] .theme-btn .icon-moon { display: none; }
+
+/* ─── Header buttons (theme + lang) ──────────────────────── */
+.header-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* ─── Language toggle ────────────────────────────────────── */
+.lang-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  color: var(--muted);
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.lang-btn:hover {
+  color: var(--accent);
+  transform: rotate(15deg);
+}
+
+.lang-btn svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.lang-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ─── i18n language toggle ───────────────────────────────── */
+.i18n-hy { display: none; }
+
+html[data-lang="hy"] .i18n-en { display: none; }
+html[data-lang="hy"] div.i18n-hy { display: block; }
+html[data-lang="hy"] span.i18n-hy { display: inline; }
+html[data-lang="hy"] p.i18n-hy { display: block; }
 
 /* ─── Divider below header ───────────────────────────────── */
 .header-rule {

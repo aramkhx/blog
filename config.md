@@ -1,6 +1,8 @@
 [title]: <> (Aram Khachatryan)
+[title_hy]: <> (Արամ Խաչատրյան)
 [domain]: <> (https://aramk.eth.limo)
 [tagline]: <> (Software & Cybersecurity Engineer / Li₿ertarian)
+[tagline_hy]: <> (Ծրագրային ապահովման և Կիբեռանվտանգության Ինժեներ / Լիբերտարիան)
 [email]: <> (aram@khachatryan.top)
 [linkedin]: <> (https://www.linkedin.com/in/arkhachatryan)
 [github]: <> (https://github.com/aramkhx)
