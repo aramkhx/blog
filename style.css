@@ -64,11 +64,6 @@ html[data-theme="dark"] {
   color: var(--text);
 }
 
-::-moz-selection {
-  background: var(--selection-bg);
-  color: var(--text);
-}
-
 /* ─── Theme transition ──────────────────────────────────── */
 body,
 a,

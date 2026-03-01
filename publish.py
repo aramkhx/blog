@@ -1,6 +1,10 @@
 #!/usr/bin/python3
-import os, re
+import os, re, shutil
+from calendar import timegm
 from datetime import datetime
+from email.utils import formatdate
+from time import strptime
+from xml.sax.saxutils import escape
 
 # ── pip install markdown ──
 import markdown
@@ -70,15 +74,11 @@ ICON_RSS = _SVG.format(
 )
 
 # ── Globe icon for language toggle (Feather Icons) ──
-ICON_GLOBE = (
-    '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" '
-    'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" '
-    'stroke-linecap="round" stroke-linejoin="round">'
+ICON_GLOBE = _SVG.format(
     '<circle cx="12" cy="12" r="10"/>'
     '<line x1="2" y1="12" x2="22" y2="12"/>'
     '<path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10'
     ' 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>'
-    '</svg>'
 )
 
 # Inline scripts – kept tiny to stay lightweight
@@ -281,7 +281,7 @@ def page_footer(is_post=False):
         social += f'<a href="{GITHUB}" class="social-link" title="GitHub" rel="noopener noreferrer" target="_blank">{ICON_GITHUB}</a>'
     social += f'<a href="{SITE_URL}/rss.xml" class="social-link" title="RSS Feed" rel="noopener noreferrer" target="_blank">{ICON_RSS}</a>'
 
-    social_html = f'<div class="footer-social">{social}</div>' if social else ""
+    social_html = f'<div class="footer-social">{social}</div>'
     progress_script = PROGRESS_JS if is_post else ""
 
     return f"""  <footer>
@@ -314,7 +314,7 @@ def extract_metadata(content):
     return meta, body
 
 
-def strip_leading_h1(body, title):
+def strip_leading_h1(body):
     """Remove first # heading from markdown body since the title is already shown in the post header."""
     lines = body.lstrip('\n').split('\n')
     if lines and re.match(r'^#\s+', lines[0]):
@@ -331,7 +331,7 @@ def load_armenian_post(slug):
         raw = f.read()
     meta, body = extract_metadata(raw)
     if meta.get('title'):
-        body = strip_leading_h1(body, meta['title'])
+        body = strip_leading_h1(body)
     html_body = markdown.markdown(body, extensions=['fenced_code', 'tables'])
     return meta, html_body
 
@@ -352,7 +352,7 @@ def build_posts():
             print(f"  Skipping {filename} — missing title/date/category")
             continue
 
-        body     = strip_leading_h1(body, meta['title'])
+        body     = strip_leading_h1(body)
         html_body = markdown.markdown(body, extensions=['fenced_code', 'tables'])
 
         slug     = filename[:-3]
@@ -365,10 +365,10 @@ def build_posts():
 
         # Check for Armenian translation
         hy = load_armenian_post(slug)
+        hy_meta, hy_html_body = hy if hy else ({}, '')
 
         # Build post title with i18n if Armenian exists
         if hy:
-            hy_meta, hy_html_body = hy
             title_html = (
                 f'<span class="i18n-en">{meta["title"]}</span>'
                 f'<span class="i18n-hy">{hy_meta.get("title", meta["title"])}</span>'
@@ -376,7 +376,7 @@ def build_posts():
         else:
             title_html = meta['title']
 
-        page  = header(meta['title'], title_hy=hy_meta.get('title', '') if hy else '', is_post=True, description=meta.get('excerpt', ''), active_page="writing")
+        page  = header(meta['title'], title_hy=hy_meta.get('title', ''), is_post=True, description=meta.get('excerpt', ''), active_page="writing")
         page += f"""  <article>
     <div class="post-header">
       <h1>{title_html}</h1>
@@ -405,12 +405,12 @@ def build_posts():
 
         posts.append({
             'title': meta['title'],
-            'title_hy': hy[0].get('title', '') if hy else '',
+            'title_hy': hy_meta.get('title', ''),
             'date':  date,
             'category': category,
             'path':  rel_path,
             'excerpt': meta.get('excerpt', ''),
-            'excerpt_hy': hy[0].get('excerpt', '') if hy else '',
+            'excerpt_hy': hy_meta.get('excerpt', ''),
             'html_body': html_body,
         })
 
@@ -472,11 +472,6 @@ def build_homepage(posts):
 
 
 def build_rss(posts):
-    from xml.sax.saxutils import escape
-    from email.utils import formatdate
-    from calendar import timegm
-    from time import strptime
-
     def to_rfc822(date_str):
         t = strptime(date_str, '%Y-%m-%d')
         return formatdate(timegm(t), usegmt=True)
@@ -516,7 +511,6 @@ def build_rss(posts):
 
 
 def copy_assets():
-    import shutil
     for asset in ['style.css', 'about.html']:
         if os.path.exists(asset):
             shutil.copy(asset, os.path.join(SITE_DIR, asset))
