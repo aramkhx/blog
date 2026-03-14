@@ -414,6 +414,7 @@ def build_posts():
             'html_body': html_body,
         })
 
+    posts.sort(key=lambda p: p['date'], reverse=True)
     return posts
 
 
